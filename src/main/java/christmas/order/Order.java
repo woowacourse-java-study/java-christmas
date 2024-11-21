@@ -14,5 +14,13 @@ public class Order {
 		this.amount = amount;
 	}
 	
+	public Menu getMenu() {
+		return menu;
+	}
+	
+	public int getAmount() {
+		return amount;
+	}
+	
 	// TODO : 현재 주문량에 대한 금액 반환
 }

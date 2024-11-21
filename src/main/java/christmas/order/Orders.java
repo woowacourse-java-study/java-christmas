@@ -1,19 +1,25 @@
 package christmas.order;
 
-import christmas.ParamsValidator;
-import christmas.calendar.Date;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Orders {
 	
 	private final List<Order> orders;
-	private final Date date;
+	private final LocalDate date;
 	
-	public Orders(List<Order> orders, Date date) {
-		ParamsValidator.validateParamsNotNull(orders, date);
+	public Orders(List<Order> orders, LocalDate date) {
 		this.orders = orders;
 		this.date = date;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+	
+	public LocalDate getDate() {
+		return date;
 	}
 	
 	//TODO : 주문한 날짜 반환
