@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class InputValidator {
 	
 	private static final Pattern ORDER_DAY_PATTERN = Pattern.compile("^\\d(\\d)?$");
-	private static final Pattern ORDERS_PATTERN = Pattern.compile("^(\\w+-\\d)+$");
+	private static final Pattern ORDERS_PATTERN = Pattern.compile("^(.+-\\d+)(,.+-\\d+)*$");
 	
 	public void validateOrderDay(String input) {
 		if (!ORDER_DAY_PATTERN.matcher(input).matches()) {
