@@ -48,7 +48,7 @@ public enum Menu {
 		return Arrays.stream(Menu.values())
 				.filter(menu -> menu.name().equals(name))
 				.findFirst()
-				.orElseThrow(CustomExceptions.MENU_NAME_NOT_FOUND::get);
+				.orElseThrow(CustomExceptions.INVALID_ORDER::get);
 	}
 	
 	public int calculateTotalCost(int purchaseAmount) {

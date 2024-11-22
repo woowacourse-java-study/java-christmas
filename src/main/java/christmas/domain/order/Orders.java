@@ -3,10 +3,13 @@ package christmas.domain.order;
 
 import christmas.common.dto.OrderMenuDto;
 import christmas.common.dto.OrdersCreateDto;
+import christmas.common.exception.CustomExceptions;
 import christmas.domain.menu.MenuType;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Orders {
 	
@@ -14,8 +17,19 @@ public class Orders {
 	private final LocalDate date;
 	
 	private Orders(List<Order> orders, LocalDate date) {
+		validate(orders);
 		this.orders = orders;
 		this.date = date;
+	}
+	
+	private void validate(List<Order> orders) {
+		Set<String> names = orders.stream()
+				.map(Order::getMenuName)
+				.collect(Collectors.toSet());
+		
+		if (names.size() != orders.size()) {
+			throw CustomExceptions.INVALID_ORDER.get();
+		}
 	}
 	
 	public static Orders from(OrdersCreateDto ordersCreateDto) {

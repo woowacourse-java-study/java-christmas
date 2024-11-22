@@ -2,24 +2,12 @@ package christmas.common.exception;
 
 public enum CustomExceptions {
 	
-	ILLEGAL_ARGUMENT(
-			"잘못된 입력입니다.",
-			IllegalArgumentException.class
-	),
-	MENU_NAME_NOT_FOUND(
-			"존재하지 않는 메뉴입니다.",
-			IllegalArgumentException.class
-	),
 	ILLEGAL_DATE(
-			"잘못된 날짜입니다.",
+			"유효하지 않은 날짜입니다. 다시 입력해 주세요.",
 			IllegalArgumentException.class
 	),
-	ILLEGAL_ORDER_FORMAT(
-			"잘못된 주문 형식입니다.",
-			IllegalArgumentException.class
-	),
-	ILLEGAL_DATE_FORMAT(
-			"잘못된 날짜 형식입니다.",
+	INVALID_ORDER(
+			"유효하지 않은 주문입니다. 다시 입력해 주세요.",
 			IllegalArgumentException.class
 	),
 	OVER_MAX_RETRY_ATTEPMT(
