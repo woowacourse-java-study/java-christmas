@@ -22,7 +22,7 @@ public class InputHandler {
 	}
 	
 	public LocalDate getOrderDate(int year, int month) {
-		writer.write("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.\n".formatted(year));
+		writer.write("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.\n".formatted(month));
 		writer.write("%d월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)\n".formatted(month));
 		String orderDay = reader.readLine();
 		inputValidator.validateOrderDay(orderDay);

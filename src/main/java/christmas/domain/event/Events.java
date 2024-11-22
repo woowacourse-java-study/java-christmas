@@ -18,14 +18,12 @@ public class Events {
 		this.promotionEvents = promotionEvents;
 	}
 	
-	//TODO : 스스로 생성되어야 함
 	public static Events of(int year, int month) {
 		List<DiscountEvent> discountEvents = DiscountEvents.of(year, month);
 		List<PromotionEvent> promotionEvents = PromotionEvents.of(year, month);
 		return new Events(discountEvents, promotionEvents);
 	}
 	
-	//TODO : 증정메뉴 반환
 	public List<PromotionDto> getPromotionMenus(Orders orders) {
 		List<Optional<PromotionDto>> promotionMenus = new ArrayList<>();
 		for (PromotionEvent promotionEvent : promotionEvents) {
@@ -36,7 +34,6 @@ public class Events {
 				.toList();
 	}
 	
-	//TODO : 혜택내역 반환
 	public List<EventResultDto> getEventList(Orders orders) {
 		List<Optional<EventResultDto>> eventResults = new ArrayList<>();
 		for (DiscountEvent discountEvent : discountEvents) {
@@ -50,12 +47,10 @@ public class Events {
 				.toList();
 	}
 	
-	//TODO : 이벤트 혜택 금액 반환
 	public int getEventCost(Orders orders) {
 		return getEventTotalDiscountCost(orders) + getEventTotalPromotionCost(orders);
 	}
 	
-	//TODO : 이벤트 할인 금액 반환
 	private int getEventTotalDiscountCost(Orders orders) {
 		List<Optional<EventResultDto>> eventResults = new ArrayList<>();
 		for (DiscountEvent discountEvent : discountEvents) {
@@ -67,7 +62,6 @@ public class Events {
 				.sum();
 	}
 	
-	//TODO : 이벤트 프로모션 금액 반환
 	private int getEventTotalPromotionCost(Orders orders) {
 		List<Optional<EventResultDto>> eventResults = new ArrayList<>();
 		for (PromotionEvent promotionEvent : promotionEvents) {

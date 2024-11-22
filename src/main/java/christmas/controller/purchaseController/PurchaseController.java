@@ -20,6 +20,6 @@ public class PurchaseController {
 		outputHandler.handleEvents(events.getEventList(orders));
 		outputHandler.handleTotalDiscountCost(events.getEventCost(orders));
 		outputHandler.handleTotalCostAfterEvent(events.getTotalCostAfterDiscount(orders));
-		outputHandler.handleBadge(Badge.from(events.getEventCost(orders)));
+		outputHandler.handleBadge(Badge.from(events.getEventCost(orders)), orders.getOrderMonth());
 	}
 }

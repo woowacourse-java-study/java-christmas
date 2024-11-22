@@ -12,11 +12,10 @@ public enum Badge implements Comparator<Badge> {
 	
 	private final int minMoney;
 	
-	Badge(int from) {
-		this.minMoney = from;
+	Badge(int minMoney) {
+		this.minMoney = minMoney;
 	}
 	
-	//TODO : 혜택 금액에 따른 뱃지 종류 반환
 	public static Optional<Badge> from(int eventDiscountCost) {
 		return Arrays.stream(Badge.values())
 				.filter(badge -> badge.minMoney <= eventDiscountCost)

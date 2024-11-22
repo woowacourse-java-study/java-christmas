@@ -56,14 +56,12 @@ public class Orders {
 				.sum();
 	}
 	
-	//TODO : 총 주문 금액 반환
 	public int getTotalCost() {
 		return orders.stream()
 				.mapToInt(Order::getCost)
 				.sum();
 	}
 	
-	//TODO : 주문 메뉴리스트 반환
 	public List<OrderMenuDto> getOrderMenus() {
 		return orders.stream()
 				.map(Order::toOrderMenu)

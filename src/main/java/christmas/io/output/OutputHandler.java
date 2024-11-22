@@ -56,9 +56,8 @@ public class OutputHandler {
 		writer.write("\n<할인 후 예상 결제 금액>\n%,d원\n".formatted(totalCostAfterDiscount));
 	}
 	
-	public void handleBadge(Optional<Badge> badge) {
-		//TODO : 12월 고쳐야함
-		writer.write("\n<12월 이벤트 배지>\n%s".formatted(getBadgeName(badge)));
+	public void handleBadge(Optional<Badge> badge, int month) {
+		writer.write("\n<%d월 이벤트 배지>\n%s".formatted(month, getBadgeName(badge)));
 	}
 	
 	private String getBadgeName(Optional<Badge> badge) {
