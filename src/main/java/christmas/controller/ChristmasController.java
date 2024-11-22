@@ -6,21 +6,24 @@ import christmas.domain.order.Orders;
 import christmas.dto.OrdersCreateDto;
 import christmas.io.input.InputHandler;
 import christmas.io.output.OutputHandler;
+import christmas.service.DateProvider;
 
 public class ChristmasController {
 	
 	private final InputHandler inputHandler;
 	private final OutputHandler outputHandler;
+	private final DateProvider dateProvider;
 	
-	public ChristmasController(InputHandler inputHandler, OutputHandler outputHandler) {
+	public ChristmasController(InputHandler inputHandler, OutputHandler outputHandler, DateProvider dateProvider) {
 		this.inputHandler = inputHandler;
 		this.outputHandler = outputHandler;
+		this.dateProvider = dateProvider;
 	}
 	
 	public void start() {
-		OrdersCreateDto ordersCreateDto = inputHandler.getOrders(2023, 12);
+		OrdersCreateDto ordersCreateDto = inputHandler.getOrders(dateProvider.getYear(), dateProvider.getYear());
 		Orders orders = Orders.from(ordersCreateDto);
-		Events events = Events.of(2023, 12);
+		Events events = Events.of(dateProvider.getYear(), dateProvider.getMonth());
 		
 		outputHandler.handleOrderMenus(orders.getOrderMenus());
 		outputHandler.handleTotalCostBeforeEvent(orders.getTotalCost());
