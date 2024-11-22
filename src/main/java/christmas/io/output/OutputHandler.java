@@ -21,18 +21,19 @@ public class OutputHandler {
 	
 	public void handleOrderMenus(List<OrderMenuDto> orderMenuDtos) {
 		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("\n<주문 메뉴>\n");
 		orderMenuDtos.forEach(orderMenuDto ->
 				stringBuilder.append(MENU_FORMAT.formatted(orderMenuDto.menuName(), orderMenuDto.amount())));
 		writer.write(stringBuilder.toString());
 	}
 	
 	public void handleTotalCostBeforeEvent(int totalCost) {
-		writer.write("<할인 전 총주문 금액>\n%,d원".formatted(totalCost));
+		writer.write("\n<할인 전 총주문 금액>\n%,d원\n".formatted(totalCost));
 	}
 	
 	public void handlePromotionMenus(List<PromotionDto> promotionDtos) {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("<증정 메뉴>\n");
+		stringBuilder.append("\n<증정 메뉴>\n");
 		promotionDtos.forEach(promotionDto ->
 				stringBuilder.append(MENU_FORMAT.formatted(promotionDto.menu().name(), promotionDto.amount())));
 		writer.write(stringBuilder.toString());
@@ -40,23 +41,23 @@ public class OutputHandler {
 	
 	public void handleEvents(List<EventResultDto> events) {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("<혜택 내역>\n");
+		stringBuilder.append("\n<혜택 내역>\n");
 		events.forEach(eventResultDto ->
-				stringBuilder.append("%s: -%,d원".formatted(eventResultDto.name(), eventResultDto.discountAmount())));
+				stringBuilder.append("%s: -%,d원\n".formatted(eventResultDto.name(), eventResultDto.discountAmount())));
 		writer.write(stringBuilder.toString());
 	}
 	
 	public void handleTotalDiscountCost(int eventTotalDiscount) {
-		writer.write("<총혜택 금액>\n-%,d원".formatted(eventTotalDiscount));
+		writer.write("\n<총혜택 금액>\n-%,d원\n".formatted(eventTotalDiscount));
 	}
 	
 	public void handleTotalCostAfterEvent(int totalCostAfterDiscount) {
-		writer.write("<할인 후 예상 결제 금액>\n%,d원".formatted(totalCostAfterDiscount));
+		writer.write("\n<할인 후 예상 결제 금액>\n%,d원\n".formatted(totalCostAfterDiscount));
 	}
 	
 	public void handleBadge(Optional<Badge> badge) {
 		//TODO : 12월 고쳐야함
-		writer.write("<12월 이벤트 배지>\n%s".formatted(getBadgeName(badge)));
+		writer.write("\n<12월 이벤트 배지>\n%s".formatted(getBadgeName(badge)));
 	}
 	
 	private String getBadgeName(Optional<Badge> badge) {
