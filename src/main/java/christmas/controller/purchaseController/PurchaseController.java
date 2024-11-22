@@ -1,4 +1,4 @@
-package christmas.controller.receiptController;
+package christmas.controller.purchaseController;
 
 import christmas.domain.badge.Badge;
 import christmas.domain.event.Events;
@@ -18,8 +18,8 @@ public class PurchaseController {
 		outputHandler.handleTotalCostBeforeEvent(orders.getTotalCost());
 		outputHandler.handlePromotionMenus(events.getPromotionMenus(orders));
 		outputHandler.handleEvents(events.getEventList(orders));
-		outputHandler.handleTotalDiscountCost(events.getEventTotalDiscount(orders));
+		outputHandler.handleTotalDiscountCost(events.getEventCost(orders));
 		outputHandler.handleTotalCostAfterEvent(events.getTotalCostAfterDiscount(orders));
-		outputHandler.handleBadge(Badge.from(events.getEventTotalDiscount(orders)));
+		outputHandler.handleBadge(Badge.from(events.getEventCost(orders)));
 	}
 }

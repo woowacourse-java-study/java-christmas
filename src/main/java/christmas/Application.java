@@ -7,7 +7,7 @@ import christmas.controller.eventController.EventController;
 import christmas.controller.orderControler.DefaultOrderController;
 import christmas.controller.orderControler.OrderController;
 import christmas.controller.orderControler.OrderControllerRetryProxy;
-import christmas.controller.receiptController.PurchaseController;
+import christmas.controller.purchaseController.PurchaseController;
 import christmas.io.input.InputHandler;
 import christmas.io.input.InputParser;
 import christmas.io.input.InputValidator;

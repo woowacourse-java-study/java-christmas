@@ -1,5 +1,6 @@
 package christmas.domain.event;
 
+import christmas.common.dto.EventResultDto;
 import christmas.common.dto.PromotionDto;
 import christmas.domain.menu.Menu;
 import christmas.domain.order.Orders;
@@ -18,13 +19,21 @@ public enum PromotionEvents implements PromotionEvent {
 			return Optional.of(new PromotionDto(Menu.샴페인, 1));
 		}
 		
+		@Override
+		public Optional<EventResultDto> applyEvent(Orders orders) {
+			if (!canApply(orders)) {
+				return Optional.empty();
+			}
+			return Optional.of(new EventResultDto(Menu.샴페인.name(), Menu.샴페인.calculateTotalCost(1)));
+		}
+		
 		private static boolean canApply(Orders orders) {
 			return orders.getTotalCost() >= 120000;
 		}
 		
 		@Override
 		public boolean isEventYearMonth(int year, int month) {
-			return year == 2024 && month == 12;
+			return year == 2023 && month == 12;
 		}
 	},
 	;

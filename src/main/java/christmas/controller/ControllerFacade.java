@@ -2,7 +2,7 @@ package christmas.controller;
 
 import christmas.controller.eventController.EventController;
 import christmas.controller.orderControler.OrderController;
-import christmas.controller.receiptController.PurchaseController;
+import christmas.controller.purchaseController.PurchaseController;
 import christmas.domain.event.Events;
 import christmas.domain.order.Orders;
 

@@ -42,13 +42,21 @@ public class Events {
 		for (DiscountEvent discountEvent : discountEvents) {
 			eventResults.add(discountEvent.applyEvent(orders));
 		}
+		for (PromotionEvent promotionEvent : promotionEvents) {
+			eventResults.add(promotionEvent.applyEvent(orders));
+		}
 		return eventResults.stream()
 				.flatMap(Optional::stream)
 				.toList();
 	}
 	
-	//TODO : 총 혜택금액 반환
-	public int getEventTotalDiscount(Orders orders) {
+	//TODO : 이벤트 혜택 금액 반환
+	public int getEventCost(Orders orders) {
+		return getEventTotalDiscountCost(orders) + getEventTotalPromotionCost(orders);
+	}
+	
+	//TODO : 이벤트 할인 금액 반환
+	private int getEventTotalDiscountCost(Orders orders) {
 		List<Optional<EventResultDto>> eventResults = new ArrayList<>();
 		for (DiscountEvent discountEvent : discountEvents) {
 			eventResults.add(discountEvent.applyEvent(orders));
@@ -59,7 +67,19 @@ public class Events {
 				.sum();
 	}
 	
+	//TODO : 이벤트 프로모션 금액 반환
+	private int getEventTotalPromotionCost(Orders orders) {
+		List<Optional<EventResultDto>> eventResults = new ArrayList<>();
+		for (PromotionEvent promotionEvent : promotionEvents) {
+			eventResults.add(promotionEvent.applyEvent(orders));
+		}
+		return eventResults.stream()
+				.flatMap(Optional::stream)
+				.mapToInt(EventResultDto::discountAmount)
+				.sum();
+	}
+	
 	public int getTotalCostAfterDiscount(Orders orders) {
-		return orders.getTotalCost() - getEventTotalDiscount(orders);
+		return orders.getTotalCost() - getEventTotalDiscountCost(orders);
 	}
 }

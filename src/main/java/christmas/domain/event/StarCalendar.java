@@ -21,6 +21,6 @@ public enum StarCalendar {
 	
 	public static boolean isStarDate(LocalDate localDate) {
 		return Arrays.stream(StarCalendar.values())
-				.anyMatch(starCalendar -> starCalendar.localDate == localDate);
+				.anyMatch(starCalendar -> starCalendar.localDate.isEqual(localDate));
 	}
 }
