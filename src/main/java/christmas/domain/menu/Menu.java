@@ -34,7 +34,7 @@ public enum Menu {
 	샴페인(25_000, MenuType.DRINK),
 	;
 	
-	public final int cost;
+	private final int cost;
 	public final MenuType menuType;
 	
 	Menu(int cost, MenuType menuType) {
@@ -49,8 +49,15 @@ public enum Menu {
 				.orElseThrow(IllegalArgumentException::new);
 	}
 	
-	//TODO : 특정 구매량에 대한 금액 반환
 	public int calculateTotalCost(int purchaseAmount) {
 		return cost * purchaseAmount;
 	}
+	
+	public boolean isMain() {
+		return menuType == MenuType.MAIN;
+	}
+	public boolean isDessert() {
+		return menuType == MenuType.DESSERT;
+	}
+	
 }

@@ -2,7 +2,6 @@ package christmas.domain.order;
 
 import christmas.domain.ParamsValidator;
 import christmas.domain.menu.Menu;
-import christmas.domain.menu.MenuType;
 import christmas.dto.OrderCreateDto;
 import christmas.dto.OrderMenuDto;
 
@@ -22,15 +21,15 @@ public class Order {
 	}
 	
 	public boolean isDessert() {
-		return menu.menuType == MenuType.DESSERT;
+		return menu.isDessert();
 	}
 	
 	public boolean isMain() {
-		return menu.menuType == MenuType.MAIN;
+		return menu.isMain();
 	}
 	
 	public int getCost() {
-		return menu.cost * amount;
+		return menu.calculateTotalCost(amount);
 	}
 	
 	public OrderMenuDto toOrderMenu() {
