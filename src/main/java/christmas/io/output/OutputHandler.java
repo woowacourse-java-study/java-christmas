@@ -1,9 +1,9 @@
 package christmas.io.output;
 
+import christmas.common.dto.EventResultDto;
+import christmas.common.dto.OrderMenuDto;
+import christmas.common.dto.PromotionDto;
 import christmas.domain.badge.Badge;
-import christmas.dto.EventResultDto;
-import christmas.dto.OrderMenuDto;
-import christmas.dto.PromotionDto;
 import christmas.io.writer.Writer;
 
 import java.util.List;
@@ -19,8 +19,9 @@ public class OutputHandler {
 		this.writer = writer;
 	}
 	
-	public void handleOrderMenus(List<OrderMenuDto> orderMenuDtos) {
+	public void handleOrderMenus(List<OrderMenuDto> orderMenuDtos, int month, int day) {
 		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n\n".formatted(month, day));
 		stringBuilder.append("\n<주문 메뉴>\n");
 		orderMenuDtos.stream()
 				.forEach(orderMenuDto -> stringBuilder.append(MENU_FORMAT.formatted(orderMenuDto.menuName(), orderMenuDto.amount())));

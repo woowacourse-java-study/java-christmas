@@ -1,8 +1,8 @@
 package christmas.domain.event;
 
+import christmas.common.dto.EventResultDto;
+import christmas.common.dto.PromotionDto;
 import christmas.domain.order.Orders;
-import christmas.dto.EventResultDto;
-import christmas.dto.PromotionDto;
 
 import java.util.ArrayList;
 import java.util.List;

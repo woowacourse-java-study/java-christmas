@@ -1,13 +1,14 @@
 package christmas.io.input;
 
-import christmas.dto.OrderCreateDto;
+import christmas.common.dto.OrderCreateDto;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
 public class InputParser {
-	public int parseOrderDay(String input) {
-		return Integer.parseInt(input);
+	public LocalDate parseOrderDay(int year, int month, String input) {
+		return LocalDate.of(year, month, Integer.parseInt(input));
 	}
 	
 	public List<OrderCreateDto> parseOrders(String input) {

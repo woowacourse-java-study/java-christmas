@@ -1,5 +1,7 @@
 package christmas.domain.menu;
 
+import christmas.common.exception.CustomExceptions;
+
 import java.util.Arrays;
 
 /*
@@ -46,7 +48,7 @@ public enum Menu {
 		return Arrays.stream(Menu.values())
 				.filter(menu -> menu.name().equals(name))
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(CustomExceptions.MENU_NAME_NOT_FOUND::get);
 	}
 	
 	public int calculateTotalCost(int purchaseAmount) {

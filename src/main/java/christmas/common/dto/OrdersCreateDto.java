@@ -1,4 +1,4 @@
-package christmas.dto;
+package christmas.common.dto;
 
 import java.time.LocalDate;
 import java.util.List;

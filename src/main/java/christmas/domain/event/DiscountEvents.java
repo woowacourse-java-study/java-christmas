@@ -1,7 +1,7 @@
 package christmas.domain.event;
 
+import christmas.common.dto.EventResultDto;
 import christmas.domain.order.Orders;
-import christmas.dto.EventResultDto;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

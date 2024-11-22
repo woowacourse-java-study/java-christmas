@@ -1,4 +1,4 @@
-package christmas.dto;
+package christmas.common.dto;
 
 import christmas.domain.menu.Menu;
 

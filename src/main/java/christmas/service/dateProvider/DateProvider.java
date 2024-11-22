@@ -1,4 +1,4 @@
-package christmas.service;
+package christmas.service.dateProvider;
 
 public interface DateProvider {
 	

@@ -1,9 +1,9 @@
 package christmas.domain.order;
 
+import christmas.common.dto.OrderCreateDto;
+import christmas.common.dto.OrderMenuDto;
 import christmas.domain.ParamsValidator;
 import christmas.domain.menu.Menu;
-import christmas.dto.OrderCreateDto;
-import christmas.dto.OrderMenuDto;
 
 public class Order {
 	

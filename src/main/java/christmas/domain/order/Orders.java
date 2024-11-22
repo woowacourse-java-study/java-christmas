@@ -1,8 +1,8 @@
 package christmas.domain.order;
 
 
-import christmas.dto.OrderMenuDto;
-import christmas.dto.OrdersCreateDto;
+import christmas.common.dto.OrderMenuDto;
+import christmas.common.dto.OrdersCreateDto;
 
 import java.time.LocalDate;
 import java.util.List;
