@@ -1,4 +1,4 @@
-package christmas.badge;
+package christmas.domain.badge;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -16,9 +16,9 @@ public enum Badge {
 	}
 	
 	//TODO : 혜택 금액에 따른 뱃지 종류 반환
-	public static Optional<Badge> from(int purchaseAmount) {
+	public static Optional<Badge> from(int eventDiscountCost) {
 		return Arrays.stream(Badge.values())
-				.filter(badge -> badge.from >= purchaseAmount)
+				.filter(badge -> badge.from >= eventDiscountCost)
 				.findFirst();
 	}
 }

@@ -1,23 +1,26 @@
-package christmas.event;
+package christmas.domain.event;
 
-import christmas.order.Orders;
+import christmas.domain.order.Orders;
+import christmas.dto.EventResultDto;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-public enum DiscountEventList implements DiscountEvent {
+public enum DiscountEvents implements DiscountEvent {
 	/*
 	크리스마스 디데이 할인
 	1,000원으로 시작하여 크리스마스가 다가올수록 날마다 할인 금액이 100원씩 증가
 	 */
-	CRISTMAS_D_DAY_DISCOUNT {
+	CHRISTMAS_D_DAY_DISCOUNT {
 		@Override
-		public Optional<EventResult> applyEvent(Orders orders) {
+		public Optional<EventResultDto> applyEvent(Orders orders) {
 			if (!canApply(orders)) {
 				Optional.empty();
 			}
-			return Optional.of(new EventResult(
+			return Optional.of(new EventResultDto(
 					"크리스마스 디데이 할인",
 					1000 + (orders.getDate().getDayOfMonth() - 1) * 100
 			));
@@ -27,6 +30,11 @@ public enum DiscountEventList implements DiscountEvent {
 			return LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
 					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 25));
 		}
+		
+		@Override
+		public boolean isEventYearMonth(int year, int month) {
+			return year == 2024 && month == 12;
+		}
 	},
 	
 	/*
@@ -34,11 +42,11 @@ public enum DiscountEventList implements DiscountEvent {
 	 */
 	WEEKDAY_DISCOUNT {
 		@Override
-		public Optional<EventResult> applyEvent(Orders orders) {
+		public Optional<EventResultDto> applyEvent(Orders orders) {
 			if (!canApply(orders)) {
 				return Optional.empty();
 			}
-			return Optional.of(new EventResult(
+			return Optional.of(new EventResultDto(
 					"평일 할인",
 					orders.getDessertCount() * 2023
 			));
@@ -51,6 +59,11 @@ public enum DiscountEventList implements DiscountEvent {
 					&& LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
 					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 31));
 		}
+		
+		@Override
+		public boolean isEventYearMonth(int year, int month) {
+			return year == 2024 && month == 12;
+		}
 	},
 
 	/*
@@ -58,11 +71,11 @@ public enum DiscountEventList implements DiscountEvent {
 	 */
 	WEEKEND_DISCOUNT {
 		@Override
-		public Optional<EventResult> applyEvent(Orders orders) {
+		public Optional<EventResultDto> applyEvent(Orders orders) {
 			if (!canApply(orders)) {
 				return Optional.empty();
 			}
-			return Optional.of(new EventResult(
+			return Optional.of(new EventResultDto(
 					"주말 할인",
 					orders.getMainCount() * 2023
 			));
@@ -75,6 +88,11 @@ public enum DiscountEventList implements DiscountEvent {
 					&& LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
 					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 31));
 		}
+		
+		@Override
+		public boolean isEventYearMonth(int year, int month) {
+			return year == 2024 && month == 12;
+		}
 	},
 	
 	/*
@@ -82,11 +100,11 @@ public enum DiscountEventList implements DiscountEvent {
 	 */
 	STAR_DISCOUNT {
 		@Override
-		public Optional<EventResult> applyEvent(Orders orders) {
+		public Optional<EventResultDto> applyEvent(Orders orders) {
 			if (!canApply(orders)) {
 				return Optional.empty();
 			}
-			return Optional.of(new EventResult(
+			return Optional.of(new EventResultDto(
 					"특별 할인",
 					1000
 			));
@@ -97,6 +115,18 @@ public enum DiscountEventList implements DiscountEvent {
 					&& LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
 					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 31));
 		}
+		
+		@Override
+		public boolean isEventYearMonth(int year, int month) {
+			return year == 2024 && month == 12;
+		}
 	},
 	;
+	
+	public static List<DiscountEvent> of(int year, int month) {
+		return Arrays.stream(DiscountEvents.values())
+				.filter(discountEvent -> discountEvent.isEventYearMonth(year, month))
+				.map(discountEvent -> (DiscountEvent) discountEvent)
+				.toList();
+	}
 }

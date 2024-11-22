@@ -1,5 +1,8 @@
-package christmas.order;
+package christmas.domain.order;
 
+
+import christmas.dto.OrderMenuDto;
+import christmas.dto.OrdersCreateDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,13 +12,17 @@ public class Orders {
 	private final List<Order> orders;
 	private final LocalDate date;
 	
-	public Orders(List<Order> orders, LocalDate date) {
+	private Orders(List<Order> orders, LocalDate date) {
 		this.orders = orders;
 		this.date = date;
 	}
 	
-	public List<Order> getOrders() {
-		return orders;
+	public static Orders from(OrdersCreateDto ordersCreateDto) {
+		List<Order> orders = ordersCreateDto.orderCreateDtos().stream()
+				.map(Order::from)
+				.toList();
+		
+		return new Orders(orders, ordersCreateDto.orderDate());
 	}
 	
 	public LocalDate getDate() {
@@ -41,7 +48,12 @@ public class Orders {
 				.sum();
 	}
 	
-	//TODO : 주문한 날짜 반환
 	//TODO : 주문 메뉴리스트 반환
+	public List<OrderMenuDto> getOrderMenus() {
+		return orders.stream()
+				.map(Order::toOrderMenu)
+				.toList();
+	}
+	
 	//TODO : 일정 금액 할인 후 총 주문 금액 반환
 }

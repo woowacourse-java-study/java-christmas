@@ -1,4 +1,4 @@
-package christmas.event;
+package christmas.domain.event;
 
 import java.time.LocalDate;
 import java.util.Arrays;

@@ -1,4 +1,6 @@
-package christmas.menu;
+package christmas.domain.menu;
+
+import java.util.Arrays;
 
 /*
 <애피타이저>
@@ -38,6 +40,13 @@ public enum Menu {
 	Menu(int cost, MenuType menuType) {
 		this.cost = cost;
 		this.menuType = menuType;
+	}
+	
+	public static Menu from(String name) {
+		return Arrays.stream(Menu.values())
+				.filter(menu -> menu.name().equals(name))
+				.findFirst()
+				.orElseThrow(IllegalArgumentException::new);
 	}
 	
 	//TODO : 특정 구매량에 대한 금액 반환
