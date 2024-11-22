@@ -55,5 +55,11 @@ public class Orders {
 				.toList();
 	}
 	
-	//TODO : 일정 금액 할인 후 총 주문 금액 반환
+	public int getOrderMonth() {
+		return date.getMonthValue();
+	}
+	
+	public int getOrderDay() {
+		return date.getDayOfMonth();
+	}
 }

@@ -22,6 +22,10 @@ public enum CustomExceptions {
 			"잘못된 날짜 형식입니다.",
 			IllegalArgumentException.class
 	),
+	OVER_MAX_RETRY_ATTEPMT(
+			"최대 재시도 횟수를 초과했습니다.",
+			IllegalStateException.class
+	)
 	;
 	
 	private final String message;
