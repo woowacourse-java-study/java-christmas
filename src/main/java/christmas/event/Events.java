@@ -22,23 +22,35 @@ public class Events {
 	//TODO : 증정메뉴 반환
 	public List<Menu> getPromotionMenus(Orders orders) {
 		List<Optional<Menu>> promotionMenus = new ArrayList<>();
-		for (Order order : orders.getOrders()) {
-			for (Event event : getPromotionEvents()) {
-				promotionMenus.add(event.applyPromotion(order.getMenu(), orders.getDate()));
-			}
+		for (Event event : events) {
+			promotionMenus.add(event.applyPromotion(orders));
 		}
 		return promotionMenus.stream()
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.toList();
-	}
-	
-	private List<Event> getPromotionEvents() {
-		return events.stream()
-				.filter(Event::isPromotionEvent)
+				.flatMap(Optional::stream)
 				.toList();
 	}
 	
 	//TODO : 혜택내역 반환
+	public List<EventResult> getEventList(Orders orders) {
+		List<Optional<EventResult>> eventResults = new ArrayList<>();
+		for (Event event : events) {
+			eventResults.add(event.applyEvent(orders));
+		}
+		return eventResults.stream()
+				.flatMap(Optional::stream)
+				.toList();
+	}
+	
 	//TODO : 총 혜택금액 반환
+	public int getEventTotalDiscount(Orders orders) {
+		List<Optional<EventResult>> eventResults = new ArrayList<>();
+		for (Event event : events) {
+			eventResults.add(event.applyEvent(orders));
+		}
+		return eventResults.stream()
+				.flatMap(Optional::stream)
+				.mapToInt(EventResult::discountAmount)
+				.sum();
+	}
+	
 }
