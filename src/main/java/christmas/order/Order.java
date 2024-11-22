@@ -2,6 +2,7 @@ package christmas.order;
 
 import christmas.menu.Menu;
 import christmas.ParamsValidator;
+import christmas.menu.MenuType;
 
 public class Order {
 	
@@ -14,13 +15,16 @@ public class Order {
 		this.amount = amount;
 	}
 	
-	public Menu getMenu() {
-		return menu;
+	public boolean isDessert() {
+		return menu.menuType == MenuType.DESSERT;
 	}
 	
-	public int getAmount() {
-		return amount;
+	public boolean isMain() {
+		return menu.menuType == MenuType.MAIN;
 	}
 	
 	// TODO : 현재 주문량에 대한 금액 반환
+	public int getCost() {
+		return menu.cost * amount;
+	}
 }
