@@ -33,7 +33,7 @@ public enum DiscountEvents implements DiscountEvent {
 		
 		@Override
 		public boolean isEventYearMonth(int year, int month) {
-			return year == 2024 && month == 12;
+			return year == 2023 && month == 12;
 		}
 	},
 	
@@ -62,7 +62,7 @@ public enum DiscountEvents implements DiscountEvent {
 		
 		@Override
 		public boolean isEventYearMonth(int year, int month) {
-			return year == 2024 && month == 12;
+			return year == 2023 && month == 12;
 		}
 	},
 
@@ -91,7 +91,7 @@ public enum DiscountEvents implements DiscountEvent {
 		
 		@Override
 		public boolean isEventYearMonth(int year, int month) {
-			return year == 2024 && month == 12;
+			return year == 2023 && month == 12;
 		}
 	},
 	
@@ -118,7 +118,7 @@ public enum DiscountEvents implements DiscountEvent {
 		
 		@Override
 		public boolean isEventYearMonth(int year, int month) {
-			return year == 2024 && month == 12;
+			return year == 2023 && month == 12;
 		}
 	},
 	;
