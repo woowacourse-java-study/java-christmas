@@ -4,6 +4,7 @@ import christmas.common.dto.OrderCreateDto;
 import christmas.common.dto.OrderMenuDto;
 import christmas.domain.ParamsValidator;
 import christmas.domain.menu.Menu;
+import christmas.domain.menu.MenuType;
 
 public class Order {
 	
@@ -20,12 +21,11 @@ public class Order {
 		return new Order(Menu.from(dto.menuName()), dto.amount());
 	}
 	
-	public boolean isDessert() {
-		return menu.isDessert();
-	}
-	
-	public boolean isMain() {
-		return menu.isMain();
+	public int getMenuTypeCount(MenuType menuType) {
+		if (menu.menuType == menuType) {
+			return amount;
+		}
+		return 0;
 	}
 	
 	public int getCost() {

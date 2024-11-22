@@ -3,6 +3,7 @@ package christmas.domain.order;
 
 import christmas.common.dto.OrderMenuDto;
 import christmas.common.dto.OrdersCreateDto;
+import christmas.domain.menu.MenuType;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,16 +30,16 @@ public class Orders {
 		return date;
 	}
 	
-	public int getDessertCount() {
-		return (int) orders.stream()
-				.filter(Order::isDessert)
-				.count();
+	public int getMainCount() {
+		return orders.stream()
+				.mapToInt(order -> order.getMenuTypeCount(MenuType.MAIN))
+				.sum();
 	}
 	
-	public int getMainCount() {
-		return (int) orders.stream()
-				.filter(Order::isMain)
-				.count();
+	public int getDessertCount() {
+		return orders.stream()
+				.mapToInt(order -> order.getMenuTypeCount(MenuType.DESSERT))
+				.sum();
 	}
 	
 	//TODO : 총 주문 금액 반환

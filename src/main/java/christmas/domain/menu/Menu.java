@@ -54,12 +54,4 @@ public enum Menu {
 	public int calculateTotalCost(int purchaseAmount) {
 		return cost * purchaseAmount;
 	}
-	
-	public boolean isMain() {
-		return menuType == MenuType.MAIN;
-	}
-	public boolean isDessert() {
-		return menuType == MenuType.DESSERT;
-	}
-	
 }
