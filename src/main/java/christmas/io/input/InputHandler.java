@@ -1,7 +1,6 @@
 package christmas.io.input;
 
 import christmas.common.dto.OrderCreateDto;
-import christmas.common.dto.OrdersCreateDto;
 import christmas.io.reader.Reader;
 import christmas.io.writer.Writer;
 
@@ -22,13 +21,7 @@ public class InputHandler {
 		this.inputValidator = inputValidator;
 	}
 	
-	public OrdersCreateDto getOrders(int year, int month) {
-		LocalDate orderDate = getOrderDate(year, month);
-		List<OrderCreateDto> orderCreateDtos = getOrders();
-		return new OrdersCreateDto(orderCreateDtos, orderDate);
-	}
-	
-	private LocalDate getOrderDate(int year, int month) {
+	public LocalDate getOrderDate(int year, int month) {
 		writer.write("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.\n".formatted(year));
 		writer.write("%d월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)\n".formatted(month));
 		String orderDay = reader.readLine();
@@ -36,7 +29,7 @@ public class InputHandler {
 		return inputParser.parseOrderDay(year, month, orderDay);
 	}
 	
-	private List<OrderCreateDto> getOrders() {
+	public List<OrderCreateDto> getOrders() {
 		writer.write("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)\n");
 		String orders = reader.readLine();
 		inputValidator.validateOrders(orders);

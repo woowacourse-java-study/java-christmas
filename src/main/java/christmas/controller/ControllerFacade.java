@@ -6,6 +6,8 @@ import christmas.controller.receiptController.PurchaseController;
 import christmas.domain.event.Events;
 import christmas.domain.order.Orders;
 
+import java.time.LocalDate;
+
 public class ControllerFacade {
 	
 	private final OrderController orderController;
@@ -19,7 +21,8 @@ public class ControllerFacade {
 	}
 	
 	public void run() {
-		Orders orders = orderController.getOrders();
+		LocalDate orderDate = orderController.getOrderDate();
+		Orders orders = orderController.getOrders(orderDate);
 		Events events = eventController.getEvents();
 		purchaseController.handlePurchase(orders, events);
 	}

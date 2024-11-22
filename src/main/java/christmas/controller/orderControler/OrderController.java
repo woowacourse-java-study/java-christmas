@@ -2,7 +2,11 @@ package christmas.controller.orderControler;
 
 import christmas.domain.order.Orders;
 
+import java.time.LocalDate;
+
 public interface OrderController {
 	
-	Orders getOrders();
+	LocalDate getOrderDate();
+	
+	Orders getOrders(LocalDate orderDate);
 }

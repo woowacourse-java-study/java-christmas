@@ -5,6 +5,8 @@ import christmas.domain.order.Orders;
 import christmas.io.input.InputHandler;
 import christmas.service.dateProvider.DateProvider;
 
+import java.time.LocalDate;
+
 public class DefaultOrderController implements OrderController {
 	
 	private final InputHandler inputHandler;
@@ -16,8 +18,12 @@ public class DefaultOrderController implements OrderController {
 	}
 	
 	@Override
-	public Orders getOrders() {
-		OrdersCreateDto ordersCreateDto = inputHandler.getOrders(dateProvider.getYear(), dateProvider.getMonth());
-		return Orders.from(ordersCreateDto);
+	public LocalDate getOrderDate() {
+		return inputHandler.getOrderDate(dateProvider.getYear(), dateProvider.getMonth());
+	}
+	
+	@Override
+	public Orders getOrders(LocalDate orderDate) {
+		return Orders.from(new OrdersCreateDto(inputHandler.getOrders(), orderDate));
 	}
 }
