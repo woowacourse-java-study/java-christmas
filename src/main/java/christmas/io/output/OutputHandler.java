@@ -21,7 +21,7 @@ public class OutputHandler {
 	
 	public void handleOrderMenus(List<OrderMenuDto> orderMenuDtos, int month, int day) {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n\n".formatted(month, day));
+		stringBuilder.append("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n".formatted(month, day));
 		stringBuilder.append("\n<주문 메뉴>\n");
 		orderMenuDtos.stream()
 				.forEach(orderMenuDto -> stringBuilder.append(MENU_FORMAT.formatted(orderMenuDto.menuName(), orderMenuDto.amount())));

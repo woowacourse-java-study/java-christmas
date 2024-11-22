@@ -31,7 +31,7 @@ public enum Menu {
 	초코케이크(15_000, MenuType.DESSERT),
 	아이스크림(5_000, MenuType.DESSERT),
 	
-	제로콜라(5_000, MenuType.DRINK),
+	제로콜라(3_000, MenuType.DRINK),
 	레드와인(60_000, MenuType.DRINK),
 	샴페인(25_000, MenuType.DRINK),
 	;

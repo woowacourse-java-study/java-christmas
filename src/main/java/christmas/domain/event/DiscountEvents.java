@@ -4,7 +4,6 @@ import christmas.common.dto.EventResultDto;
 import christmas.domain.order.Orders;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +17,7 @@ public enum DiscountEvents implements DiscountEvent {
 		@Override
 		public Optional<EventResultDto> applyEvent(Orders orders) {
 			if (!canApply(orders)) {
-				Optional.empty();
+				return Optional.empty();
 			}
 			return Optional.of(new EventResultDto(
 					"크리스마스 디데이 할인",
@@ -27,8 +26,7 @@ public enum DiscountEvents implements DiscountEvent {
 		}
 		
 		private static boolean canApply(Orders orders) {
-			return LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
-					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 25));
+			return EventPeriod.isInPeriod(2023, 12, 1, 25, orders.getDate());
 		}
 		
 		@Override
@@ -56,8 +54,7 @@ public enum DiscountEvents implements DiscountEvent {
 			DayOfWeek orderDay = orders.getDate().getDayOfWeek();
 			return orderDay != DayOfWeek.SATURDAY
 					&& orderDay != DayOfWeek.FRIDAY
-					&& LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
-					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 31));
+					&& EventPeriod.isInPeriod(2023, 12, orders.getDate());
 		}
 		
 		@Override
@@ -83,10 +80,8 @@ public enum DiscountEvents implements DiscountEvent {
 		
 		private static boolean canApply(Orders orders) {
 			DayOfWeek orderDay = orders.getDate().getDayOfWeek();
-			return (orderDay == DayOfWeek.SATURDAY
-					|| orderDay == DayOfWeek.FRIDAY)
-					&& LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
-					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 31));
+			return (orderDay == DayOfWeek.SATURDAY || orderDay == DayOfWeek.FRIDAY)
+					&& EventPeriod.isInPeriod(2023, 12, orders.getDate());
 		}
 		
 		@Override
@@ -112,8 +107,7 @@ public enum DiscountEvents implements DiscountEvent {
 		
 		private static boolean canApply(Orders orders) {
 			return StarCalendar.isStarDate(orders.getDate())
-					&& LocalDate.of(2023, 12, 1).isBefore(orders.getDate())
-					&& orders.getDate().isBefore(LocalDate.of(2023, 12, 31));
+					&& EventPeriod.isInPeriod(2023, 12, orders.getDate());
 		}
 		
 		@Override
