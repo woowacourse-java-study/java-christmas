@@ -22,8 +22,8 @@ public class OutputHandler {
 	public void handleOrderMenus(List<OrderMenuDto> orderMenuDtos) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("\n<주문 메뉴>\n");
-		orderMenuDtos.forEach(orderMenuDto ->
-				stringBuilder.append(MENU_FORMAT.formatted(orderMenuDto.menuName(), orderMenuDto.amount())));
+		orderMenuDtos.stream()
+				.forEach(orderMenuDto -> stringBuilder.append(MENU_FORMAT.formatted(orderMenuDto.menuName(), orderMenuDto.amount())));
 		writer.write(stringBuilder.toString());
 	}
 	
@@ -34,16 +34,16 @@ public class OutputHandler {
 	public void handlePromotionMenus(List<PromotionDto> promotionDtos) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("\n<증정 메뉴>\n");
-		promotionDtos.forEach(promotionDto ->
-				stringBuilder.append(MENU_FORMAT.formatted(promotionDto.menu().name(), promotionDto.amount())));
+		promotionDtos.stream()
+				.forEach(promotionDto -> stringBuilder.append(MENU_FORMAT.formatted(promotionDto.menu().name(), promotionDto.amount())));
 		writer.write(stringBuilder.toString());
 	}
 	
 	public void handleEvents(List<EventResultDto> events) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("\n<혜택 내역>\n");
-		events.forEach(eventResultDto ->
-				stringBuilder.append("%s: -%,d원\n".formatted(eventResultDto.name(), eventResultDto.discountAmount())));
+		events.stream().filter(event -> event.discountAmount() != 0)
+				.forEach(eventResultDto -> stringBuilder.append("%s: -%,d원\n".formatted(eventResultDto.name(), eventResultDto.discountAmount())));
 		writer.write(stringBuilder.toString());
 	}
 	
