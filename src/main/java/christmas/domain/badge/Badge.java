@@ -9,16 +9,16 @@ public enum Badge {
 	산타(20_000),
 	;
 	
-	private final int from;
+	private final int minMoney;
 	
 	Badge(int from) {
-		this.from = from;
+		this.minMoney = from;
 	}
 	
 	//TODO : 혜택 금액에 따른 뱃지 종류 반환
 	public static Optional<Badge> from(int eventDiscountCost) {
 		return Arrays.stream(Badge.values())
-				.filter(badge -> badge.from >= eventDiscountCost)
+				.filter(badge -> badge.minMoney <= eventDiscountCost)
 				.findFirst();
 	}
 }
