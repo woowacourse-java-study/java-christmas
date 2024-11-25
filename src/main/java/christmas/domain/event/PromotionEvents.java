@@ -28,7 +28,8 @@ public enum PromotionEvents implements PromotionEvent {
 		}
 		
 		private static boolean canApply(Orders orders) {
-			return orders.getTotalCost() >= 120000;
+			return orders.getTotalCost() >= 120000
+					&& EventPeriod.isInPeriod(2023, 12, orders.getDate());
 		}
 		
 		@Override
