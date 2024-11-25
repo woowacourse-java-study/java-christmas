@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 public class Orders {
 	
+	private static final int MIN_ORDER_COST = 10000;
+	private static final int MAX_ORDER_COUNT = 20;
+	
 	private final List<Order> orders;
 	private final LocalDate date;
 	
@@ -23,11 +26,51 @@ public class Orders {
 	}
 	
 	private void validate(List<Order> orders) {
+		validateNoDuplication(orders);
+		validateMinCost(orders);
+		validateNotOnlyDrink(orders);
+		validateOrderCount(orders);
+	}
+	
+	private static void validateNoDuplication(List<Order> orders) {
 		Set<String> names = orders.stream()
 				.map(Order::getMenuName)
 				.collect(Collectors.toSet());
 		
 		if (names.size() != orders.size()) {
+			throw CustomExceptions.INVALID_ORDER.get();
+		}
+	}
+	
+	private static void validateMinCost(List<Order> orders) {
+		int totalCost = orders.stream()
+				.mapToInt(Order::getCost)
+				.sum();
+		if (totalCost < MIN_ORDER_COST) {
+			throw CustomExceptions.INVALID_ORDER.get();
+		}
+	}
+	
+	private void validateNotOnlyDrink(List<Order> orders) {
+		boolean isAllDrink = true;
+		for (Order order : orders) {
+			if (!order.isDrink()) {
+				isAllDrink = false;
+				break;
+			}
+		}
+		
+		if (isAllDrink) {
+			throw CustomExceptions.INVALID_ORDER.get();
+		}
+	}
+	
+	private void validateOrderCount(List<Order> orders) {
+		int totalOrderCount = orders.stream()
+				.mapToInt(Order::getAmount)
+				.sum();
+		
+		if (totalOrderCount > MAX_ORDER_COUNT) {
 			throw CustomExceptions.INVALID_ORDER.get();
 		}
 	}

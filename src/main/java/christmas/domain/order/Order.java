@@ -31,6 +31,10 @@ public class Order {
 		return new Order(Menu.from(dto.menuName()), dto.amount());
 	}
 	
+	public boolean isDrink() {
+		return menu.menuType == MenuType.DRINK;
+	}
+	
 	public int getMenuTypeCount(MenuType menuType) {
 		if (menu.menuType == menuType) {
 			return amount;
@@ -44,6 +48,10 @@ public class Order {
 	
 	public int getCost() {
 		return menu.calculateTotalCost(amount);
+	}
+	
+	public int getAmount() {
+		return amount;
 	}
 	
 	public OrderMenuDto toOrderMenu() {
