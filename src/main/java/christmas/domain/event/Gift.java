@@ -1,4 +1,5 @@
 package christmas.domain.event;
 
-public interface Gift {
+public interface Gift<Type> {
+    Type getGiftOrNot(int amount);
 }
