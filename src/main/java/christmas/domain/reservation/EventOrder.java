@@ -2,15 +2,15 @@ package christmas.domain.reservation;
 
 public class EventOrder implements Order {
     private final String dishName;
-    private final int count;
+    private final int quantity;
 
-    public EventOrder(String dishName, int count) {
+    public EventOrder(String dishName, int quantity) {
         this.dishName = dishName;
-        this.count = count;
+        this.quantity = quantity;
     }
 
-    public int getCount(){
-        return count;
+    public int getQuantity(){
+        return quantity;
     }
     public String getDishName() {
         return dishName;
