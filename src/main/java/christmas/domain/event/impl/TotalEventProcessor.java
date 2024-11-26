@@ -35,31 +35,31 @@ public class TotalEventProcessor implements EventProcessor {
 
     @Override
     public String getEventResult(List<Order> orders, LocalDate date, int totalPrice) {
-        StringBuilder result = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
-        result.append("<증정메뉴>\n");
+        builder.append("\n<증정메뉴>\n");
 
-        int champagneDiscount = getChampagneDiscount(totalPrice, result);
+        int champagneDiscount = getChampagneDiscount(totalPrice, builder);
         int totalDiscountAmount = champagneDiscount;
 
-        result.append("\n혜택 내역\n");
-        totalDiscountAmount += getDDayDiscount(date,result);
+        builder.append("\n혜택 내역\n");
+        totalDiscountAmount += getDDayDiscount(date,builder);
         if(weekends.contains(date.getDayOfWeek()) ) {
-            totalDiscountAmount += getWeekendDiscount(orders,result);
+            totalDiscountAmount += getWeekendDiscount(orders,builder);
         }
         if (!weekends.contains(date.getDayOfWeek())){
-            totalDiscountAmount += getWeekdaysDiscount(orders,result);
+            totalDiscountAmount += getWeekdaysDiscount(orders,builder);
         }
-        totalDiscountAmount += getSpecialDiscount(date,result);
+        totalDiscountAmount += getSpecialDiscount(date,builder);
         if(champagneDiscount != 0) {
-            result.append("증정 이벤트: -").append(champagneDiscount).append("원").append("\n");
+            builder.append("증정 이벤트: -").append(champagneDiscount).append("원").append("\n");
         }
 
-        result.append("\n<총혜택 금액>\n-").append(totalDiscountAmount).append("원").append("\n");
-        result.append("\n<할인 후 예상 결제 금액>\n").append(totalPrice - totalDiscountAmount).append("원").append("\n");
-        result.append("\n<12월 이벤트 배지>\n").append(badgeGift.getGiftOrNot(totalDiscountAmount));
+        builder.append("\n<총혜택 금액>\n-").append(totalDiscountAmount).append("원").append("\n");
+        builder.append("\n<할인 후 예상 결제 금액>\n").append(totalPrice - totalDiscountAmount).append("원").append("\n");
+        builder.append("\n<12월 이벤트 배지>\n").append(badgeGift.getGiftOrNot(totalDiscountAmount));
 
-        return result.toString();
+        return builder.toString();
     }
 
     private int getChampagneDiscount(int totalPrice, StringBuilder result) {

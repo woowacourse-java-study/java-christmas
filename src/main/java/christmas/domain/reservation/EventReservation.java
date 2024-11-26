@@ -1,6 +1,6 @@
 package christmas.domain.reservation;
 
-import christmas.domain.event.DiscountProcessor;
+import christmas.domain.event.EventProcessor;
 import christmas.domain.menu.impl.Menu;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,25 +21,21 @@ public class EventReservation implements Reservation {
         new EventReservation(orders,eventDate);
     }
 
-    public int applyDDayDiscount(DiscountProcessor dDayDiscount){
-        int discountAmount = 0;
-        return discountAmount;
+    public String makeReceipt(EventProcessor totalEventProcessor){
+        StringBuilder builder = new StringBuilder();
+        builder.append("12월 ").append(eventDate.getDayOfWeek()).append("일에 우테코 식당에서 받을 혜택 미리 보기!\n");
+
+        builder.append("\n<주문 메뉴>\n");
+        for(Order order : orders){
+            builder.append(order.getDishName()).append(" ").append(order.getQuantity()).append("개\n");
+        }
+        builder.append("<할인 전 총주문 금액>\n").append(totalPrice).append("원\n");
+
+        builder.append(totalEventProcessor.getEventResult(orders,eventDate,totalPrice));
+
+        return builder.toString();
     }
 
-    public int applySpecialDiscount(DiscountProcessor specialDiscount){
-        int discountAmount = 0;
-        return discountAmount;
-    }
-
-    public int applyWeekdaysDiscount(DiscountProcessor weekdaysDiscount){
-        int discountAmount = 0;
-        return discountAmount;
-    }
-
-    public int applyWeekendDiscount(DiscountProcessor weekendDiscount){
-        int discountAmount = 0;
-        return discountAmount;
-    }
 
     private int getTotalPrice(){
         int priceSum = 0;
