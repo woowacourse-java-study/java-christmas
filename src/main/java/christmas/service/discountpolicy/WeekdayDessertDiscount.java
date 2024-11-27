@@ -22,4 +22,9 @@ public class WeekdayDessertDiscount implements DiscountPolicy {
         }
         return BigDecimal.ZERO;
     }
+
+    @Override
+    public String getPolicyName() {
+        return "평일 할인";
+    }
 }

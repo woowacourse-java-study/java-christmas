@@ -6,4 +6,6 @@ import java.math.BigDecimal;
 
 public interface DiscountPolicy {
     BigDecimal applyDiscount(Order order, int date);
+
+    String getPolicyName();
 }

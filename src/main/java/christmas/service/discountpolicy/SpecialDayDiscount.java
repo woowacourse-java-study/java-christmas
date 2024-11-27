@@ -21,4 +21,9 @@ public class SpecialDayDiscount implements DiscountPolicy {
         }
         return BigDecimal.ZERO;
     }
+
+    @Override
+    public String getPolicyName() {
+        return "특별 할인";
+    }
 }

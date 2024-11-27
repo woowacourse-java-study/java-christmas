@@ -14,4 +14,9 @@ public class ChristmasCountdownDiscount implements DiscountPolicy {
         }
         return BigDecimal.ZERO;
     }
+
+    @Override
+    public String getPolicyName() {
+        return "크리스마스 디데이 할인";
+    }
 }

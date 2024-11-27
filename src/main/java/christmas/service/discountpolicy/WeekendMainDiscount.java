@@ -23,4 +23,9 @@ public class WeekendMainDiscount implements DiscountPolicy {
         }
         return BigDecimal.ZERO;
     }
+
+    @Override
+    public String getPolicyName() {
+        return "주말할인";
+    }
 }
