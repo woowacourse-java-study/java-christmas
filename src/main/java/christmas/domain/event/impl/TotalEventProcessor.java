@@ -37,12 +37,17 @@ public class TotalEventProcessor implements EventProcessor {
     public String getEventResult(List<Order> orders, LocalDate date, int totalPrice) {
         StringBuilder builder = new StringBuilder();
 
+        if (totalPrice > 10000){
+            getLessMoneyResult(totalPrice,builder);
+            return builder.toString();
+        }
+
         builder.append("\n<증정메뉴>\n");
 
         int champagneDiscount = getChampagneDiscount(totalPrice, builder);
         int totalDiscountAmount = champagneDiscount;
 
-        builder.append("\n혜택 내역\n");
+        builder.append("\n<혜택 내역>\n");
         totalDiscountAmount += getDDayDiscount(date,builder);
         if(weekends.contains(date.getDayOfWeek()) ) {
             totalDiscountAmount += getWeekendDiscount(orders,builder);
@@ -55,7 +60,7 @@ public class TotalEventProcessor implements EventProcessor {
             builder.append("증정 이벤트: -").append(champagneDiscount).append("원").append("\n");
         }
 
-        builder.append("\n<총혜택 금액>\n-").append(totalDiscountAmount).append("원").append("\n");
+        builder.append("\n<총혜택 금액>\n").append( (-1)*totalDiscountAmount).append("원").append("\n");
         builder.append("\n<할인 후 예상 결제 금액>\n").append(totalPrice - totalDiscountAmount).append("원").append("\n");
         builder.append("\n<12월 이벤트 배지>\n").append(badgeGift.getGiftOrNot(totalDiscountAmount));
 
@@ -75,26 +80,42 @@ public class TotalEventProcessor implements EventProcessor {
 
     private int getDDayDiscount(LocalDate date, StringBuilder result) {
         int dDayDiscountAmount = dDayDiscount.processDiscount(date);
-        result.append("크리스마스 디데이 할인: -").append(dDayDiscountAmount).append("원").append("\n");
+        if (dDayDiscountAmount != 0) {
+            result.append("크리스마스 디데이 할인: -").append(dDayDiscountAmount).append("원").append("\n");
+        }
+
         return dDayDiscountAmount;
     }
 
     private int getWeekendDiscount(List<Order> orders, StringBuilder result) {
         int weekendDiscountAmount =  weekendDiscount.processDiscount(orders);
-        result.append("주말 할인: -").append(weekendDiscountAmount).append("원").append("\n");
+        if (weekendDiscountAmount != 0) {
+            result.append("주말 할인: -").append(weekendDiscountAmount).append("원").append("\n");
+        }
         return weekendDiscountAmount;
     }
 
     private int getWeekdaysDiscount(List<Order>  orders, StringBuilder result) {
         int weekdaysDiscountAmount = weekdaysDiscount.processDiscount(orders);
-        result.append("평일 할인: -").append(weekdaysDiscountAmount).append("원").append("\n");
+        if (weekdaysDiscountAmount != 0) {
+            result.append("평일 할인: -").append(weekdaysDiscountAmount).append("원").append("\n");
+        }
         return weekdaysDiscountAmount;
     }
 
     private int getSpecialDiscount(LocalDate date, StringBuilder result) {
         int specialDiscountAmount = specialDiscount.processDiscount(date);
-        result.append("특별 할인: -").append(specialDiscountAmount).append("원").append("\n");
+        if (specialDiscountAmount != 0) {
+            result.append("특별 할인: -").append(specialDiscountAmount).append("원").append("\n");
+        }
         return specialDiscountAmount;
+
+    }
+
+    private void getLessMoneyResult(int totalPrice, StringBuilder builder) {
+        builder.append("\n<증정 메뉴>\n없음\n").append("\n<혜택 내역>\n없음\n").append("\n<총혜택 금액>\n0원\n")
+                .append("\n<할인 후 예상 결재 금액>\n").append(totalPrice).append("원\n")
+                .append("\n<12월 이벤트 배지>\n없음");
 
     }
 

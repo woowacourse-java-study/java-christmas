@@ -29,7 +29,7 @@ public class EventReservation implements Reservation {
         for(Order order : orders){
             builder.append(order.getDishName()).append(" ").append(order.getQuantity()).append("개\n");
         }
-        builder.append("<할인 전 총주문 금액>\n").append(totalPrice).append("원\n");
+        builder.append("\n<할인 전 총주문 금액>\n").append(totalPrice).append("원\n");
 
         builder.append(totalEventProcessor.getEventResult(orders,eventDate,totalPrice));
 
