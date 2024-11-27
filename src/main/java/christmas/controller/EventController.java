@@ -7,7 +7,6 @@ import christmas.service.DiscountCalculator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class EventController {
