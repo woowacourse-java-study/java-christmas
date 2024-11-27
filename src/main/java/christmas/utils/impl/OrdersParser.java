@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersParser implements InputParser<List<Order>> {
-    private final InputValidator orderValidator;
+    private final InputValidator ordersValidator;
 
-    public OrdersParser(InputValidator orderValidator) {
-        this.orderValidator = orderValidator;
+    public OrdersParser(InputValidator ordersValidator) {
+        this.ordersValidator = ordersValidator;
     }
 
     @Override
     public List<Order> parse(String rawOrders) {
-        orderValidator.validate(rawOrders);
+        ordersValidator.validate(rawOrders);
 
         List<Order> orders = new ArrayList<>();
         for (String rawOrder : rawOrders.split(",")) {

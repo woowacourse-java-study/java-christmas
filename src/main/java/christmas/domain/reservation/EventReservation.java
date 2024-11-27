@@ -17,8 +17,8 @@ public class EventReservation implements Reservation {
 
     }
 
-    public static void create(List<Order> orders,LocalDate eventDate){
-        new EventReservation(orders,eventDate);
+    public static EventReservation create(List<Order> orders,LocalDate eventDate){
+        return new EventReservation(orders,eventDate);
     }
 
     public String makeReceipt(EventProcessor totalEventProcessor){
