@@ -16,6 +16,8 @@ public class EventController {
     private static final String ORDER_DELIMITER = ",";
     private static final String DETAIL_DELIMITER = "-";
     private static final int GIFT_DISCOUNT_AMOUNT = 25000;
+    private static final int EVENT_YEAR = 2023;
+    private static final int EVENT_MONTH = 12;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -35,7 +37,7 @@ public class EventController {
         while (true) {
             try {
                 int visitDay = readValidVisitDate();
-                LocalDate visitDate = LocalDate.of(2023, 12, visitDay);
+                LocalDate visitDate = LocalDate.of(EVENT_YEAR, EVENT_MONTH, visitDay);
 
                 Order order = createOrderFromInput();
                 processOrder(order, visitDay, visitDate);
