@@ -27,17 +27,30 @@ public class OrdersValidator implements InputValidator {
         for (String rawOrder : rawOrders.split(",")) {
             String[] parts = rawOrder.split("-");
 
+            if (parts.length > 40 || parts.length %2 == 1) {
+                throw new IllegalArgumentException(NOT_VALID_ORDER_FORMAT.getErrorMessage());
+            }
+
             validateDishName(parts[0]);
             validateQuantity(parts[1]);
 
             String dishName = parts[0];
             int quantity = Integer.parseInt(parts[1]);
 
+
             if (dishes.contains(dishName)) {
                 throw new IllegalArgumentException(NOT_VALID_ORDER_FORMAT.getErrorMessage());
             }
             dishes.add(dishName);
         }
+
+        for (String dishName : dishes) {
+            if( !Menu.valueOf(dishName).getCategory().equals("BEVERAGE")){
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException(NOT_VALID_ORDER_FORMAT.getErrorMessage());
     }
 
     private void validateDishName(String dishName) {
