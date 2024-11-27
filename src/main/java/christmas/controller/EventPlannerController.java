@@ -18,10 +18,6 @@ public class EventPlannerController {
     private final OutputView outputView;
     private final InputView inputView;
 
-
-
-
-
     public EventPlannerController(EventService eventService, InputView inputView, OutputView outputView) {
         this.eventService = eventService;
         this.outputView = outputView;
@@ -30,8 +26,8 @@ public class EventPlannerController {
 
     public void run() {
 
-        int date = readDateWithRetry(inputView);
-        List<OrderItem> orderItems = readOrderWithRetry(inputView);
+        int date = readDateWithRetry();
+        List<OrderItem> orderItems = readOrderWithRetry();
 
         Order order = new Order(orderItems);
         EventResult eventResult = eventService.planEvent(order, date);
@@ -39,10 +35,9 @@ public class EventPlannerController {
         outputView.printEventResult(eventResult);
     }
 
-    private int readDateWithRetry(InputView inputView) {
+    private int readDateWithRetry() {
         while (true) {
             try {
-
                 int date = InputValidator.validateDate(inputView.readDate());
                 return date;
             } catch (IllegalArgumentException e) {
@@ -51,7 +46,7 @@ public class EventPlannerController {
         }
     }
 
-    private List<OrderItem> readOrderWithRetry(InputView inputView) {
+    private List<OrderItem> readOrderWithRetry() {
         while (true) {
             try {
                 String input = inputView.readOrder();
