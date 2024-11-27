@@ -17,7 +17,8 @@ public class OutputView {
     private static final String WON_SUFFIX = "원";
     private static final String NO_DISCOUNT_MESSAGE = "없음";
     private static final String DAILY_DISCOUNT_LABEL = "크리스마스 디데이 할인: ";
-    private static final String CATEGORY_DISCOUNT_LABEL = "평일/주말 할인: ";
+    private static final String WEEKDAY_DISCOUNT_LABEL = "평일 할인: ";
+    private static final String WEEKEND_DISCOUNT_LABEL = "주말 할인: ";
     private static final String SPECIAL_DISCOUNT_LABEL = "특별 할인: ";
     private static final String GIFT_EVENT_LABEL = "증정 이벤트: ";
     private static final String ORDER_ITEM_FORMAT = "%s %d개";
@@ -25,11 +26,11 @@ public class OutputView {
     private static final String NEGATIVE_PREFIX = "-";
     private static final int GIFT_DISCOUNT_AMOUNT = 25000;
 
-    public void printOrderSummary(Order order, int totalPrice, int totalDiscount, int finalPrice, String gift, int dailyDiscount, int categoryDiscount, int specialDayDiscount, String badge) {
+    public void printOrderSummary(Order order, int totalPrice, int totalDiscount, int finalPrice, String gift, int dailyDiscount, int weekdayDiscount, int weekendDiscount, int specialDayDiscount, String badge) {
         printOrderDetails(order);
         printPriceDetails(totalPrice);
         printGiftDetails(gift);
-        printDiscountDetails(dailyDiscount, categoryDiscount, specialDayDiscount, gift);
+        printDiscountDetails(dailyDiscount, weekdayDiscount, weekendDiscount, specialDayDiscount, gift);
         printTotalBenefits(totalDiscount);
         printFinalPrice(finalPrice);
         printBadge(badge);
@@ -52,20 +53,17 @@ public class OutputView {
         System.out.println(gift);
     }
 
-    private void printDiscountDetails(int dailyDiscount, int categoryDiscount, int specialDayDiscount, String gift) {
+    private void printDiscountDetails(int dailyDiscount, int weekdayDiscount, int weekendDiscount, int specialDayDiscount, String gift) {
         System.out.println(DISCOUNT_DETAILS_HEADER);
-        if (hasNoDiscount(dailyDiscount, categoryDiscount, specialDayDiscount, gift)) {
+        if (dailyDiscount == 0 && weekdayDiscount == 0 && weekendDiscount == 0 && specialDayDiscount == 0 && NO_GIFT.equals(gift)) {
             System.out.println(NO_DISCOUNT_MESSAGE);
             return;
         }
         printDailyDiscount(dailyDiscount);
-        printCategoryDiscount(categoryDiscount);
+        printWeekdayDiscount(weekdayDiscount);
+        printWeekendDiscount(weekendDiscount);
         printSpecialDayDiscount(specialDayDiscount);
         printGiftEventDiscount(gift);
-    }
-
-    private boolean hasNoDiscount(int dailyDiscount, int categoryDiscount, int specialDayDiscount, String gift) {
-        return dailyDiscount == 0 && categoryDiscount == 0 && specialDayDiscount == 0 && NO_GIFT.equals(gift);
     }
 
     private void printDailyDiscount(int dailyDiscount) {
@@ -74,9 +72,15 @@ public class OutputView {
         }
     }
 
-    private void printCategoryDiscount(int categoryDiscount) {
-        if (categoryDiscount > 0) {
-            System.out.println(CATEGORY_DISCOUNT_LABEL + formatDiscount(categoryDiscount) + WON_SUFFIX);
+    private void printWeekdayDiscount(int weekdayDiscount) {
+        if (weekdayDiscount > 0) {
+            System.out.println(WEEKDAY_DISCOUNT_LABEL + formatDiscount(weekdayDiscount) + WON_SUFFIX);
+        }
+    }
+
+    private void printWeekendDiscount(int weekendDiscount) {
+        if (weekendDiscount > 0) {
+            System.out.println(WEEKEND_DISCOUNT_LABEL + formatDiscount(weekendDiscount) + WON_SUFFIX);
         }
     }
 
@@ -115,7 +119,7 @@ public class OutputView {
         return NumberFormat.getInstance(Locale.KOREA).format(amount);
     }
 
-    public void printError(String meesage) {
-        System.out.println(meesage);
+    public void printError(String message) {
+        System.out.println(message);
     }
 }

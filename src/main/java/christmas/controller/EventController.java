@@ -11,10 +11,11 @@ import java.time.LocalDate;
 
 public class EventController {
 
-    private static final String GIFT_CHAMPAGNE = "샴페인 1개"; // 증정 메뉴 상수
-    private static final String NO_GIFT = "없음";            // 증정 메뉴가 없을 때
-    private static final String ORDER_DELIMITER = ",";      // 주문 항목 구분자
-    private static final String DETAIL_DELIMITER = "-";     // 메뉴명-개수 구분자
+    private static final String GIFT_CHAMPAGNE = "샴페인 1개";
+    private static final String NO_GIFT = "없음";
+    private static final String ORDER_DELIMITER = ",";
+    private static final String DETAIL_DELIMITER = "-";
+    private static final int GIFT_DISCOUNT_AMOUNT = 25000;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -31,14 +32,17 @@ public class EventController {
     }
 
     public void run() {
-        try {
-            int visitDay = readValidVisitDate();
-            LocalDate visitDate = LocalDate.of(2023, 12, visitDay);
+        while (true) {
+            try {
+                int visitDay = readValidVisitDate();
+                LocalDate visitDate = LocalDate.of(2023, 12, visitDay);
 
-            Order order = createOrderFromInput();
-            processOrder(order, visitDay, visitDate); // LocalDate 전달
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
+                Order order = createOrderFromInput();
+                processOrder(order, visitDay, visitDate);
+                break;
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
         }
     }
 
@@ -78,19 +82,19 @@ public class EventController {
         int totalPrice = order.calculateTotalPrice();
 
         int dailyDiscount = discountCalculator.calculateDailyDiscount(visitDay);
-        int categoryDiscount = discountCalculator.calculateCategoryDiscount(order, visitDate); // LocalDate 사용
+        int weekdayDiscount = discountCalculator.calculateWeekdayDiscount(order, visitDate);
+        int weekendDiscount = discountCalculator.calculateWeekendDiscount(order, visitDate);
         int specialDayDiscount = discountCalculator.calculateSpecialDayDiscount(visitDate);
 
         boolean eligibleForGift = discountCalculator.isEligibleForGift(totalPrice);
         String gift = getGiftBasedOnEligibility(eligibleForGift);
 
-        int totalDiscount = calculateTotalDiscount(dailyDiscount, categoryDiscount, specialDayDiscount, eligibleForGift);
-        int discountPrice = calculateDiscount(dailyDiscount, categoryDiscount, specialDayDiscount);
-        int finalPrice = totalPrice - discountPrice;
+        int totalDiscount = calculateTotalDiscount(dailyDiscount, weekdayDiscount, weekendDiscount, specialDayDiscount, eligibleForGift);
+        int finalPrice = totalPrice - (dailyDiscount + weekdayDiscount + weekendDiscount + specialDayDiscount);
 
         String badge = Badge.getBadgeByBenefit(totalDiscount).getName();
 
-        outputView.printOrderSummary(order, totalPrice, totalDiscount, finalPrice, gift, dailyDiscount, categoryDiscount, specialDayDiscount, badge);
+        outputView.printOrderSummary(order, totalPrice, totalDiscount, finalPrice, gift, dailyDiscount, weekdayDiscount, weekendDiscount, specialDayDiscount, badge);
     }
 
     private String getGiftBasedOnEligibility(boolean eligibleForGift) {
@@ -100,15 +104,11 @@ public class EventController {
         return NO_GIFT;
     }
 
-    private int calculateDiscount(int dailyDiscount, int categoryDiscount, int specialDayDiscount) {
-        return dailyDiscount + categoryDiscount + specialDayDiscount;
-    }
-
-    private int calculateTotalDiscount(int dailyDiscount, int categoryDiscount, int specialDayDiscount, boolean eligibleForGift) {
+    private int calculateTotalDiscount(int dailyDiscount, int weekdayDiscount, int weekendDiscount, int specialDayDiscount, boolean eligibleForGift) {
         int giftDiscount = 0;
         if (eligibleForGift) {
-            giftDiscount = 25000;
+            giftDiscount = GIFT_DISCOUNT_AMOUNT;
         }
-        return dailyDiscount + categoryDiscount + specialDayDiscount + giftDiscount;
+        return dailyDiscount + weekdayDiscount + weekendDiscount + specialDayDiscount + giftDiscount;
     }
 }
